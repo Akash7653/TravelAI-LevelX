@@ -147,6 +147,7 @@ export default function DestinationSelector({
                 <img
                   src={dest.image}
                   alt={dest.name}
+                  referrerPolicy="no-referrer"
                   loading="lazy"
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />

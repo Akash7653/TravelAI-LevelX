@@ -18,7 +18,7 @@ export const destinations = [
     location: "Hyderabad, India",
     category: "Historical",
     emoji: "🕌",
-    image: "https://images.unsplash.com/photo-1576487248805-cf45f6bcc67f?auto=format&fit=crop&w=800&q=80",
+    image: "https://upload.wikimedia.org/wikipedia/commons/7/71/Charminar_Hyderabad_1.jpg",
     shortDescription: "Iconic 16th-century monument with four soaring minarets anchoring Hyderabad's old city.",
     highlight: "Sultan Quli Qutb Shah • 1591 CE"
   },
@@ -30,7 +30,7 @@ export const destinations = [
     location: "Hyderabad, India",
     category: "Architecture",
     emoji: "🏰",
-    image: "https://images.unsplash.com/photo-1590050752117-238cb0fb12b1?auto=format&fit=crop&w=800&q=80",
+    image: "https://upload.wikimedia.org/wikipedia/commons/5/56/Golconda_Fort_005.jpg",
     shortDescription: "Massive medieval fortress renowned for acoustic marvels and legendary diamond vaults.",
     highlight: "Acoustic Whispering Gallery • Koh-i-Noor"
   },
@@ -66,9 +66,9 @@ export const destinations = [
     location: "Karnataka, India",
     category: "Historical",
     emoji: "🛕",
-    image: "https://images.unsplash.com/photo-1589308078059-be1415eab4c3?auto=format&fit=crop&w=800&q=80",
+    image: "https://upload.wikimedia.org/wikipedia/commons/d/dd/Wide_angle_of_Galigopuram_of_Virupaksha_Temple%2C_Hampi_%2804%29_%28cropped%29.jpg",
     shortDescription: "Breathtaking ruins of the Vijayanagara Empire among surreal boulder-strewn hills.",
-    highlight: "Stone Chariot • Vijayanagara Empire"
+    highlight: "Virupaksha & Stone Chariot • Vijayanagara"
   },
   {
     id: "tirupati",
@@ -78,7 +78,7 @@ export const destinations = [
     location: "Andhra Pradesh, India",
     category: "Religious",
     emoji: "🕉️",
-    image: "https://images.unsplash.com/photo-1621847468516-1ed5d0df56fe?auto=format&fit=crop&w=800&q=80",
+    image: "https://upload.wikimedia.org/wikipedia/commons/4/4e/Tirumala_090615.jpg",
     shortDescription: "Sacred hill shrine of Lord Venkateswara nestled atop seven holy peaks of Seshachalam.",
     highlight: "Tirumala Hills • Sacred Pilgrimage"
   },
@@ -90,7 +90,7 @@ export const destinations = [
     location: "Delhi, India",
     category: "Historical",
     emoji: "🏯",
-    image: "https://images.unsplash.com/photo-1587474260584-136574528ed5?auto=format&fit=crop&w=800&q=80",
+    image: "https://upload.wikimedia.org/wikipedia/commons/2/2a/Delhi_fort.jpg",
     shortDescription: "Magnificent red sandstone citadel serving as the seat of Mughal emperors for 200 years.",
     highlight: "Lal Qila • Mughal Architecture"
   },
@@ -102,7 +102,7 @@ export const destinations = [
     location: "New Delhi, India",
     category: "Historical",
     emoji: "🎖️",
-    image: "https://images.unsplash.com/photo-1597040663342-45b6af3d91a5?auto=format&fit=crop&w=800&q=80",
+    image: "https://upload.wikimedia.org/wikipedia/commons/3/3b/India_Gate_front.jpg",
     shortDescription: "Triumphal memorial archway honoring soldiers, illuminated splendidly at twilight.",
     highlight: "Kartavya Path • Amar Jawan Jyoti"
   },
@@ -126,7 +126,7 @@ export const destinations = [
     location: "Delhi, India",
     category: "Architecture",
     emoji: "🗼",
-    image: "https://images.unsplash.com/photo-1585135497273-1a86b09fe70e?auto=format&fit=crop&w=800&q=80",
+    image: "https://upload.wikimedia.org/wikipedia/commons/3/3c/Qutb_Minar_2022.jpg",
     shortDescription: "World's tallest brick minaret adorned with intricate carvings and historic inscriptions.",
     highlight: "73m Tower • Delhi Sultanate"
   },
@@ -138,7 +138,7 @@ export const destinations = [
     location: "Tamil Nadu, India",
     category: "Religious",
     emoji: "🛕",
-    image: "https://images.unsplash.com/photo-1609766857041-ed402ea8069a?auto=format&fit=crop&w=800&q=80",
+    image: "https://upload.wikimedia.org/wikipedia/commons/e/e9/An_aerial_view_of_Madurai_city_from_atop_of_Meenakshi_Amman_temple.jpg",
     shortDescription: "Historic Dravidian temple complex with 14 colorful gopurams celebrating Goddess Meenakshi.",
     highlight: "Dravidian Gopurams • 1000 Pillars"
   },
@@ -150,7 +150,7 @@ export const destinations = [
     location: "Odisha, India",
     category: "Architecture",
     emoji: "☀️",
-    image: "https://images.unsplash.com/photo-1609137144813-7d9921338f24?auto=format&fit=crop&w=800&q=80",
+    image: "https://upload.wikimedia.org/wikipedia/commons/4/47/Konarka_Temple.jpg",
     shortDescription: "13th-century chariot temple dedicated to the Sun God Surya with monumental carved stone wheels.",
     highlight: "Sundial Wheels • UNESCO Heritage"
   },
@@ -162,7 +162,7 @@ export const destinations = [
     location: "Maharashtra, India",
     category: "Cultural",
     emoji: "🧗",
-    image: "https://images.unsplash.com/photo-1598890777032-bde835ba27c2?auto=format&fit=crop&w=800&q=80",
+    image: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Ajanta_%2863%29.jpg",
     shortDescription: "Ancient rock-cut Buddhist cave monuments featuring masterwork religious murals and sculptures.",
     highlight: "2nd Century BCE • Buddhist Murals"
   },
@@ -174,7 +174,7 @@ export const destinations = [
     location: "Maharashtra, India",
     category: "Cultural",
     emoji: "⛰️",
-    image: "https://images.unsplash.com/photo-1616486788371-62d930495c44?auto=format&fit=crop&w=800&q=80",
+    image: "https://upload.wikimedia.org/wikipedia/en/f/fc/Kailash_temple_%28Ellora_cave_no_15%29_at_Verul.png",
     shortDescription: "World-famous monolithic rock excavations including the awe-inspiring Kailash temple cut from top down.",
     highlight: "Kailasa Temple • Monolithic Wonder"
   },
@@ -272,7 +272,7 @@ export const destinations = [
     location: "Ma'an, Jordan",
     category: "International",
     emoji: "🏜️",
-    image: "https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1666689464611-ab58097a06cf?auto=format&fit=crop&w=800&q=80",
     shortDescription: "Rose-red city carved directly into vibrant sandstone canyon cliffs by the ancient Nabataeans.",
     highlight: "Al-Khazneh Treasury • Siq Canyon"
   },
@@ -296,7 +296,7 @@ export const destinations = [
     location: "Barcelona, Spain",
     category: "International",
     emoji: "⛪",
-    image: "https://images.unsplash.com/photo-1587595431973-160d0d94add1?auto=format&fit=crop&w=800&q=80",
+    image: "https://upload.wikimedia.org/wikipedia/commons/e/ef/SF_maig_2_cropped.jpg",
     shortDescription: "Antoni Gaudí's unfinished Art Nouveau and Gothic basilica masterpiece of organic stone forms.",
     highlight: "Antoni Gaudí • UNESCO World Heritage"
   },

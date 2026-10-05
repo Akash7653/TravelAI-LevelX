@@ -51,6 +51,7 @@ export default function DestinationCard({ destination, isSelected, onSelect }) {
             src={imgError ? fallbackImage : destination.image}
             alt={destination.name}
             onError={() => setImgError(true)}
+            referrerPolicy="no-referrer"
             loading="lazy"
             className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500 ease-out"
           />

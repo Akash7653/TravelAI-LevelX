@@ -16,6 +16,8 @@ import GuideDetailPage from "./pages/GuideDetailPage";
 import ProtectedRoute from "./components/ProtectedRoute";
 import { InitialAppLoader } from "./components/Skeletons";
 
+import { ENDPOINTS } from "./config/api";
+
 // Scroll to top on route change
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -29,6 +31,34 @@ function MainLayout() {
   const { isAuthenticated } = useAuth();
   const location = useLocation();
 
+  const [sideNavCollapsed, setSideNavCollapsed] = useState(() => {
+    try {
+      return localStorage.getItem("travelai_sidenav_collapsed") === "true";
+    } catch {
+      return false;
+    }
+  });
+
+  const toggleSideNav = () => {
+    setSideNavCollapsed((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem("travelai_sidenav_collapsed", String(next));
+      } catch {}
+      return next;
+    });
+  };
+
+  // Immediate background warmup ping to awake Render backend container on load
+  useEffect(() => {
+    const warmBackend = () => {
+      fetch(ENDPOINTS.HEALTH, { method: "GET" }).catch(() => {});
+    };
+    warmBackend();
+    const interval = setInterval(warmBackend, 10 * 60 * 1000); // keep warm every 10 min
+    return () => clearInterval(interval);
+  }, []);
+
   // Show desktop side nav on inside pages when logged in
   const isLandingPage = location.pathname === "/";
   const showDesktopSideNav = isAuthenticated && !isLandingPage;
@@ -38,10 +68,19 @@ function MainLayout() {
       <ScrollToTop />
 
       {/* Desktop Side Nav for Authenticated Users on Inside Pages */}
-      {showDesktopSideNav && <DesktopSideNav />}
+      {showDesktopSideNav && (
+        <DesktopSideNav
+          collapsed={sideNavCollapsed}
+          onToggleCollapse={toggleSideNav}
+        />
+      )}
 
       {/* Wrapper adjusting for desktop side nav width when active */}
-      <div className={`flex-1 flex flex-col transition-all duration-300 ${showDesktopSideNav ? "md:pl-64" : ""}`}>
+      <div
+        className={`flex-1 flex flex-col transition-all duration-300 ease-in-out ${
+          showDesktopSideNav ? (sideNavCollapsed ? "md:pl-20" : "md:pl-64") : ""
+        }`}
+      >
         {/* Global Navigation Header */}
         <Header />
 

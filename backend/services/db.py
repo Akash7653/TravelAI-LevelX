@@ -129,12 +129,19 @@ def get_db():
 
     return None
 
+_last_ping_time = 0
+PING_CACHE_TTL = 30  # Cache ping status for 30s to prevent roundtrip latency
+
 def is_connected():
     """Returns True if connected to real MongoDB, False if local store."""
-    global _mongo_client, _db, _is_mongo_connected
+    global _mongo_client, _db, _is_mongo_connected, _last_ping_time
+    now = time.time()
     if _is_mongo_connected and _mongo_client is not None:
+        if now - _last_ping_time < PING_CACHE_TTL:
+            return True
         try:
             _mongo_client.admin.command('ping')
+            _last_ping_time = now
             return True
         except Exception:
             _is_mongo_connected = False
@@ -143,6 +150,8 @@ def is_connected():
             return False
 
     db = get_db()
+    if _is_mongo_connected:
+        _last_ping_time = now
     return _is_mongo_connected
 
 # ================= USER OPERATIONS =================

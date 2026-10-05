@@ -92,12 +92,13 @@ def generate_description(place: str, answer_type: str, language: str) -> str:
             f"Respond ONLY in {language}."
         )
 
-    # Preferred current models for Google GenAI
+    # Preferred current low-latency models for Google GenAI (fastest first)
     models_to_try = [
-        "gemini-3.8-flash",
+        "gemini-3.5-flash-lite",
+        "gemini-flash-lite-latest",
+        "gemini-flash-latest",
         "gemini-3.5-flash",
-        "gemini-3-flash-preview",
-        "gemini-flash-latest"
+        "gemini-3.8-flash"
     ]
     last_error = None
 
