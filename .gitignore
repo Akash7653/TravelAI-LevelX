@@ -29,4 +29,5 @@ Thumbs.db
 .idea/
 # Local data
 backend/data/
-data/
+/data/
+!frontend/src/data/
