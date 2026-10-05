@@ -2,7 +2,11 @@
  * Central API configuration for TravelAI.
  * Uses VITE_API_BASE_URL if defined, defaulting to http://127.0.0.1:5002.
  */
-const rawBaseUrl = import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:5002";
+const defaultBaseUrl = import.meta.env.PROD
+  ? "https://travelai-backend-sjkg.onrender.com"
+  : "http://127.0.0.1:5002";
+
+const rawBaseUrl = import.meta.env.VITE_API_BASE_URL || defaultBaseUrl;
 export const API_BASE_URL = rawBaseUrl.replace(/\/+$/, "");
 
 export const ENDPOINTS = {
