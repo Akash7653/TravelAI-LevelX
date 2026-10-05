@@ -1,21 +1,24 @@
 import os
 import json
 import uuid
+import time
 import logging
 from datetime import datetime, timezone
+import certifi
 from dotenv import load_dotenv
 
 load_dotenv()
 
 logger = logging.getLogger(__name__)
 
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/travelai").strip()
-MONGO_DB_NAME = os.getenv("MONGO_DB_NAME", "travelai").strip()
+MONGO_URI = (os.getenv("MONGO_URI") or os.getenv("MONGODB_URI") or "mongodb://localhost:27017/travelai").strip()
+MONGO_DB_NAME = (os.getenv("MONGO_DB_NAME") or os.getenv("MONGODB_NAME") or "travelai").strip()
 
 _mongo_client = None
 _db = None
 _is_mongo_connected = False
-_attempted_mongo = False
+_last_mongo_attempt_time = 0
+RETRY_INTERVAL_SECONDS = 10  # Seconds between reconnection attempts if offline
 
 # Local storage fallback path
 DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data")
@@ -52,19 +55,48 @@ def _write_local_db(data):
 
 def get_db():
     """Initializes and returns MongoDB database or marks fallback flag."""
-    global _mongo_client, _db, _is_mongo_connected, _attempted_mongo
-    if _db is not None:
+    global _mongo_client, _db, _is_mongo_connected, _last_mongo_attempt_time
+    if _is_mongo_connected and _db is not None:
         return _db
-    if _attempted_mongo:
+
+    now = time.time()
+    # Throttle connection attempts to avoid blocking every incoming request
+    if now - _last_mongo_attempt_time < RETRY_INTERVAL_SECONDS:
         return None
 
-    _attempted_mongo = True
-    if MONGO_URI and MONGO_URI != "your_mongodb_connection_string":
+    _last_mongo_attempt_time = now
+
+    if MONGO_URI and not MONGO_URI.startswith("your_"):
+        client = None
         try:
             from pymongo import MongoClient
-            _mongo_client = MongoClient(MONGO_URI, serverSelectionTimeoutMS=5000)
-            # Ping to verify active connection
-            _mongo_client.admin.command('ping')
+
+            # 1. Attempt connection with verified certifi CA certificate bundle
+            try:
+                client = MongoClient(
+                    MONGO_URI,
+                    tlsCAFile=certifi.where(),
+                    serverSelectionTimeoutMS=2000
+                )
+                client.admin.command('ping')
+                _mongo_client = client
+            except Exception:
+                if client is not None:
+                    try:
+                        client.close()
+                    except Exception:
+                        pass
+                    client = None
+                # 2. Resilient fallback: attempt with tlsAllowInvalidCertificates
+                client = MongoClient(
+                    MONGO_URI,
+                    tls=True,
+                    tlsAllowInvalidCertificates=True,
+                    serverSelectionTimeoutMS=2000
+                )
+                client.admin.command('ping')
+                _mongo_client = client
+
             _db = _mongo_client[MONGO_DB_NAME]
             _is_mongo_connected = True
             logger.info(f"Connected to MongoDB successfully: {MONGO_DB_NAME}")
@@ -80,18 +112,37 @@ def get_db():
 
             return _db
         except Exception as e:
+            if client is not None:
+                try:
+                    client.close()
+                except Exception:
+                    pass
+            _mongo_client = None
             logger.warning(f"Could not connect to MongoDB ({e}). Falling back to robust persistent local JSON store.")
             _is_mongo_connected = False
             _db = None
     else:
         logger.info("MONGO_URI not configured. Using persistent local JSON store.")
         _is_mongo_connected = False
+        _db = None
+        _mongo_client = None
 
     return None
 
 def is_connected():
     """Returns True if connected to real MongoDB, False if local store."""
-    get_db()
+    global _mongo_client, _db, _is_mongo_connected
+    if _is_mongo_connected and _mongo_client is not None:
+        try:
+            _mongo_client.admin.command('ping')
+            return True
+        except Exception:
+            _is_mongo_connected = False
+            _db = None
+            _mongo_client = None
+            return False
+
+    db = get_db()
     return _is_mongo_connected
 
 # ================= USER OPERATIONS =================

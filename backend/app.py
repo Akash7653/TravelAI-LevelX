@@ -65,6 +65,17 @@ ALLOWED_ANSWER_TYPES = {"Summary", "Detailed"}
 MAX_PLACE_LENGTH = 150
 MAX_LANGUAGE_LENGTH = 50
 
+# ----------------- ROOT ROUTE -----------------
+@app.route("/", methods=["GET"])
+def index():
+    """Root status route."""
+    return jsonify({
+        "success": True,
+        "service": "TravelAI API",
+        "message": "TravelAI backend is running",
+        "health": "/health"
+    }), 200
+
 # ----------------- HEALTH CHECK -----------------
 @app.route("/health", methods=["GET"])
 def health_check():
